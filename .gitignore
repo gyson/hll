@@ -22,3 +22,5 @@ erl_crash.dump
 # Ignore package tarball (built via "mix hex.build").
 hll-*.tar
 
+# Ignore redis db data for developement and testing
+dump.rdb

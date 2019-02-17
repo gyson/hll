@@ -7,7 +7,11 @@ defmodule HLL.MixProject do
       version: "0.1.0",
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      package: package(),
+      name: "HLL",
+      description: "Redis compatible HyperLogLog implementation in Elixir",
+      source_url: "https://github.com/gyson/hll"
     ]
   end
 
@@ -21,8 +25,19 @@ defmodule HLL.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      # {:dep_from_hexpm, "~> 0.3.0"},
-      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
+      {:hypex, "~> 1.1", only: :dev},
+      {:benchee, "~> 0.13", only: :dev},
+      {:redix, "~> 0.9", only: [:dev, :test]},
+      {:stream_data, "~> 0.4", only: [:dev, :test]},
+      {:ex_doc, "~> 0.19", only: :dev, runtime: false},
+      {:dialyxir, "~> 1.0.0-rc.4", only: :dev, runtime: false}
     ]
+  end
+
+  def package do
+    %{
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/gyson/hll"}
+    }
   end
 end
