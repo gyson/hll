@@ -3,6 +3,36 @@ defmodule HLL.Redis do
 
   Redis compatible HyperLogLog module.
 
+  This module is Redis (v5) compatible. It uses the same hash algorithm,
+  same HyperLogLog estimation algorithm and same serialization format as
+  Redis (v5) does.
+
+  Therefore, it could consume HyperLogLog sketches from Redis and it could
+  generate HyperLogLog sketches for Redis as well.
+
+  It has fixed precision 14 (16384 buckets) as Redis does. If you are looking
+  for using different precision, you could use `HLL` module instead.
+
+  `HLL.Redis` module is generally slower than alternative `HLL` module:
+
+    - `HLL.Redis` hash function is slower: Hash function in `HLL.Redis`
+      is ported from Redis and written in Elixir. Hash function in `HLL`
+      is `:erlang.phash2`, which is in native code.
+    - `HLL.Redis` serialization is slower: `HLL.Redis` uses Redis binary
+      format for serialization. `HLL` uses a binary format which is closer
+      to `HLL`'s internal data structure, which makes it faster to encode
+      and decode.
+
+  Therefore, if you do not require "Redis compatible", it's recommanded to
+  use `HLL` module for performance gain.
+
+  ## Example
+
+      iex> hll_redis = HLL.Redis.new()
+      iex> hll_redis = Enum.reduce(1..2000, hll_redis, fn i, acc -> HLL.Redis.add(acc, Integer.to_string(i)) end)
+      iex> HLL.Redis.cardinality(hll_redis)
+      2006
+
   """
 
   use Bitwise
@@ -31,6 +61,11 @@ defmodule HLL.Redis do
   @doc """
 
   Add a value to Redis compatible HyperLogLog instance.
+
+  If `item` is binary, it would use Redis compatible murmur2 hash function directly.
+
+  If `item` is not binary, it would be transformed to binary via `:erlang.term_to_binary/1`
+  and then use Redis compatible murmur2 hash function.
 
   ## Example
 

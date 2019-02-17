@@ -3,6 +3,29 @@ defmodule HLL do
 
   Default HyperLogLog module.
 
+  Note that this module is not Redis compatible. Use alternative `HLL.Redis` module
+  if you need to interact with Redis and need it to be Redis compatible.
+
+  This module use `:erlang.phash2` as hash function.
+
+  ## Example
+
+      iex> hll = HLL.new(14)
+      iex> hll = Enum.reduce(1..2000, hll, fn i, acc -> HLL.add(acc, i) end)
+      iex> HLL.cardinality(hll)
+      1998
+
+  ## Serialization
+
+  It has two representations, sparse and dense. When encode HyperLogLog with `HLL.encode`,
+  this module would automatically choose the representation with smaller encoded size.
+
+      # sparse representation:
+      <<0::4, precision_with_offset::4, index0::p, count0::6, index1::p, count1::6 ..., padding::x>>
+
+      # dense representation:
+      <<1::4, precision_with_offset::4, count0::6, count1::6, count2::6 ...>>
+
   """
 
   use Bitwise
