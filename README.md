@@ -27,7 +27,7 @@ The package can be installed by adding `hll` to your list of dependencies in `mi
 ```elixir
 def deps do
   [
-    {:hll, "~> 0.1.0"}
+    {:hll, "~> 0.1"}
   ]
 end
 ```
