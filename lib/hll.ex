@@ -6,7 +6,7 @@ defmodule HLL do
   Note that this module is not Redis compatible. Use alternative `HLL.Redis` module
   if you need to interact with Redis and need it to be Redis compatible.
 
-  This module use `:erlang.phash2` as hash function.
+  This module uses `:erlang.phash2` as hash function.
 
   ## Example
 
@@ -17,7 +17,8 @@ defmodule HLL do
 
   ## Serialization
 
-  It has two representations, sparse and dense. When encode HyperLogLog with `HLL.encode`,
+  It has two representations, sparse (space-efficient for low cardinality) and dense
+  (space-efficient for high cardinality). When encode HyperLogLog with `HLL.encode`,
   this module would automatically choose the representation with smaller encoded size.
 
       # sparse representation:
