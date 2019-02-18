@@ -21,10 +21,10 @@ defmodule HLL do
   this module would automatically choose the representation with smaller encoded size.
 
       # sparse representation:
-      <<0::4, precision_with_offset::4, index0::p, count0::6, index1::p, count1::6 ..., padding::x>>
+      <<0::4, (p - 8)::4, index0::p, count0::6, index1::p, count1::6 ..., padding::xx>>
 
       # dense representation:
-      <<1::4, precision_with_offset::4, count0::6, count1::6, count2::6 ...>>
+      <<1::4, (p - 8)::4, count0::6, count1::6, count2::6 ...>>
 
   """
 
