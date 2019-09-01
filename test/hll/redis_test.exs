@@ -5,7 +5,7 @@ defmodule HLL.RedisTest do
   setup_all do
     redis_host = System.fetch_env!("REDIS_HOST")
     redis_port = System.fetch_env!("REDIS_PORT")
-    {:ok, conn} = Redix.start_link("redis://#{redis_host}:#{redis_port}", name: :redix)
+    {:ok, conn} = Redix.start_link(host: redis_host, port: redis_port)
     {:ok, conn: conn}
   end
 
