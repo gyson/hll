@@ -25,5 +25,6 @@ jobs:
         mix deps.get
     - name: Run Tests
       env:
+        REDIS_HOST: 0.0.0.0
         REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
       run: mix test
