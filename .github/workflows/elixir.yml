@@ -23,8 +23,7 @@ jobs:
         mix local.rebar --force
         mix local.hex --force
         mix deps.get
-    - name: setup env
+    - name: Run Tests
       env:
         REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
-    - name: Run Tests
       run: mix test
