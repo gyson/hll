@@ -3,7 +3,8 @@ defmodule HLL.RedisTest do
   doctest HLL.Redis
 
   setup_all do
-    {:ok, conn} = Redix.start_link("redis://host.docker.internal:6379", name: :redix)
+    redis_port = System.fetch_env!("REDIS_PORT")
+    {:ok, conn} = Redix.start_link("redis://localhost:#{redis_port}", name: :redix)
     {:ok, conn: conn}
   end
 
