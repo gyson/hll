@@ -7,9 +7,6 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    container:
-      image: elixir:1.9.1-slim
-
     services:
       redis:
         image: redis
@@ -18,13 +15,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - uses: actions/setup-elixir@v1.0.0
+      with:
+        otp-version: 22.1
+        elixir-version: 1.9.4
+
     - name: Install Dependencies
-      run: |
-        mix local.rebar --force
-        mix local.hex --force
-        mix deps.get
+      run: mix deps.get
+
     - name: Run Tests
-      env:
-        REDIS_HOST: redis
-        REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
+      # env:
+      #   REDIS_HOST: redis
+      #   REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
       run: mix test
