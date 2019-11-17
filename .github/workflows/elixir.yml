@@ -7,20 +7,15 @@ jobs:
 
     strategy:
       matrix:
-        os:
-        - macos-latest
-        - windows-latest
-        - ubuntu-latest
-
         otp:
-        - 21.3
-        - 22.1
+        - 21.3.8.10
+        - 22.1.7
 
         elixir:
         - 1.8.2
         - 1.9.4
 
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
 
     services:
       redis:
