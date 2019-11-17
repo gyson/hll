@@ -24,3 +24,5 @@ hll-*.tar
 
 # Ignore redis db data for developement and testing
 dump.rdb
+
+.elixir_ls
