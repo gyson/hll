@@ -15,11 +15,14 @@ jobs:
         - 1.8.2
         - 1.9.4
 
+        redis:
+        - 5.0
+
     runs-on: ubuntu-latest
 
     services:
       redis:
-        image: redis
+        image: redis:${{ matrix.redis }}
         ports:
         - 6379:6379
 
